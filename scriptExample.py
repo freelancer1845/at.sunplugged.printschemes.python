@@ -9,6 +9,7 @@ from Elements.Shapes import LaserLine
 import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
 import GraphicalRepresentations.Canvas
+import Utils
 
 if __name__ == '__main__':
     
@@ -121,5 +122,13 @@ if __name__ == '__main__':
     laserScript = ScriptAlgorithms.laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(allLaserLines, nullX, nullY)
     print (laserScript)
     
+    ''' show a very rudimantary graphical represenation ( will be moved to a matplotlib plot... )'''
     GraphicalRepresentations.Canvas.showLines(allLaserLines)
+    
+    ''' save the file if you want '''
+    filename = raw_input("If you want to save the file, provide a filename:\n")
+    if filename != '':
+        Utils.saveScript(laserScript,filename)
+    
+    
                                                                                                 
