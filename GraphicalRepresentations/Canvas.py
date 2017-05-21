@@ -14,6 +14,9 @@ def showLines(lines):
     
     root = Tk();
     
+
+
+    
     canvas = Canvas(root, width = 1200, height = 1000)
     canvas.pack()
     for line in lines:

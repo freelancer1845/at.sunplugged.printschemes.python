@@ -10,16 +10,23 @@ from Elements.Shapes import LaseredFiducial
 import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
 import GraphicalRepresentations.matplotlibRepresentation
+import GraphicalRepresentations.Gui
 import Utils
 
 if __name__ == '__main__':
     
+    defaultValues = []
     
-    ''' This creates n cells and adds an n + 1 incomplete cell plus a cut off line. '''
-
-    xStart = 0
-    xEnd = 40000
+    def createDefaultValue(value):
+        defaultValues.append(value);
+        return value;
     
+    
+    ''' This creates n cells and adds a n + 1 incomplete cell plus a cut off line. '''
+    xStart = 0;
+    defaultValues.append(xStart);
+    xEnd = 40000;
+    defaultValues.append(xEnd);
     ''' Parameters For P1 '''
     powerP1 = 45
     freqP1 = 20
@@ -51,6 +58,32 @@ if __name__ == '__main__':
     ''' Cell duplication parameters '''
     distanceBetweenCells = 5000
     numberOfCells = 5
+    '''
+    #Graphical representation of a value input form. Not finished.
+    inputForm = GraphicalRepresentations.Gui.InputForm('xStart', 'xEnd', 'powerP1', 'freqP1', 'speedP1', 'yStartP1', 'powerP2', 'freqP2', 'speedP2', 'ystartP2', 'distance Betweeen P2 Lines',
+    'powerP3',
+    'freqP3',
+    'speedP3',
+    'yStartP3',
+    'distanceBetweenFirstAndSecondP3Line',
+    'distanceBetweenSecondAndThirdP3Line', 'startCutOff',
+    'endCutOff',
+    'powerCutOff',
+    'freqCutOff',
+    'speedCutOff', 'distanceBetweenCells',
+    'numberOfCells')
+    inputForm.setDefaultValues(defaultValues)
+    
+    if inputForm.open() == True:
+        index = 0;
+        for field in inputForm.fieldValues:
+            if field != '':
+                print('new value')
+                defaultValues[index] = int(field);
+            index += 1;
+    else:
+        quit()
+    '''
     
     ''' First create one cell and store all the lines in one array '''
     singleCellLines = []
