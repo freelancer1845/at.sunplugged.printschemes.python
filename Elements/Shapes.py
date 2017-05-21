@@ -7,7 +7,7 @@ Defining all available shapes.
 '''
 
 import operator
-import copy
+from Utils import LineGroup
 
 class Line:
     ''' Representing a basic line '''
@@ -32,7 +32,8 @@ class Line:
         self.start = tuple(map(operator.add, self.start, translationVector));
         self.end = tuple(map(operator.add, self.end, translationVector));
         return self
-
+    
+  
 class LaserLine(Line):
     ''' Representing a Laser line. Normal line with power frequency and speed associated.'''
     def __init__(self, start=(0, 0), end=(0, 0), power=0, frequency=0, speed=0):
@@ -52,6 +53,22 @@ class LaserLine(Line):
         newLine = LaserLine(self.start,self.end,self.power,self.frequency,self.speed).translate(translationVector)
         
         return newLine
+    
+class LaseredFiducial(LineGroup):
+    ''' LaseredFiducial with default size. The center point will be the center of the cross '''
+    def __init__(self, center=(0, 0), width = 5, height = 5, power = 45, freq = 20, speed = 25000):
+        if isinstance(center, tuple) == False:
+            raise ValueError('parameter center must be a tuple of x and y position!');
+        if _checkIfIntFloatOrLong(center[0]) == False or _checkIfIntFloatOrLong(center[1]):
+            raise ValueError('x and y of center must be long or int!')
+        xstart = center[0] - width / 2.0;
+        xend = center[0] + width / 2.0;
+        ystart = center[0] - height / 2.0;
+        yend = center[0] + height / 2.0;
+        self.addLine(LaserLine((xstart, center[1]), (xend, center[1]), power, freq, speed));
+        self.addLine(LaserLine((center[0], ystart), (center[0] , yend), power, freq, speed));
+        
+        
 
 class Rectangle:
     '''Representing a simple rectangle'''

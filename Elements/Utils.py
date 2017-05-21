@@ -7,6 +7,7 @@ This module contains some Utility classes and functions that can be used to save
 '''
 import Shapes
 import copy
+from Shapes import Line
 
 
 def duplicateLineArray(lines, translationVector=(0, 0)):
@@ -30,27 +31,29 @@ def duplicateLineArray(lines, translationVector=(0, 0)):
 
 
 class LineGroup:
-    def __init__(self, lines):
-        if isinstance(lines, list) == False:
-            raise ValueError('lines must be an list like structure!')
-        for line in lines:
-            if isinstance(line, Shapes.Line) == False:
-                raise ValueError('lines contains at least one element that is not a line!')
-        
-        self.lines = lines
+    ''' Wrapper for multiple lines'''
+    def __init__(self, containingLines = []):
+        for line in containingLines:
+            if isinstance(line, Line) == False:
+                raise ValueError('A line group may only consist of lines!');
+        self.lines = containingLines;
+
+    def addLine(self, line):
+        if isinstance(line, Line) == False:
+            raise ValueError('A line group may only consist of lines!');
+        self.lines.append(line);
     
-    def translateLines(self, translationVector=(0, 0)):
-        if isinstance(translationVector, tuple) == False:
-            raise ValueError('translationVector must be a tuple!')
-        if _checkIfIntFloatOrLong(translationVector[0]) == False or _checkIfIntFloatOrLong(translationVector[1]) == False:
-            raise ValueError('translationVector must be a tuple of numbers!')
-        
+    def translate(self, translationVector = (0, 0)):
         for line in self.lines:
-            line.start = line.start + translationVector;
-            line.end = line.end + translationVector;
+            line.translate(translationVector);
             
-    def createCopy(self, translationVector=(0, 0)):
-        return copy.deepcopy(self).translateLines(translationVector)
+    def createCopy(self, translationVector):
+        newGroupLines = []
+        for line in self.lines:
+            newLine = copy.deepcopy(line);
+            newLine.translate(translationVector);
+            newGroupLines.append(newLine);
+        return newGroupLines;
         
 
 def _checkIfIntFloatOrLong(x):
