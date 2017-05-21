@@ -7,7 +7,6 @@ This module contains some Utility classes and functions that can be used to save
 '''
 import Shapes
 import copy
-from Shapes import Line
 
 
 def duplicateLineArray(lines, translationVector=(0, 0)):
@@ -30,30 +29,6 @@ def duplicateLineArray(lines, translationVector=(0, 0)):
     
 
 
-class LineGroup:
-    ''' Wrapper for multiple lines'''
-    def __init__(self, containingLines = []):
-        for line in containingLines:
-            if isinstance(line, Line) == False:
-                raise ValueError('A line group may only consist of lines!');
-        self.lines = containingLines;
-
-    def addLine(self, line):
-        if isinstance(line, Line) == False:
-            raise ValueError('A line group may only consist of lines!');
-        self.lines.append(line);
-    
-    def translate(self, translationVector = (0, 0)):
-        for line in self.lines:
-            line.translate(translationVector);
-            
-    def createCopy(self, translationVector):
-        newGroupLines = []
-        for line in self.lines:
-            newLine = copy.deepcopy(line);
-            newLine.translate(translationVector);
-            newGroupLines.append(newLine);
-        return newGroupLines;
         
 
 def _checkIfIntFloatOrLong(x):

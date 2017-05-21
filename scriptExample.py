@@ -6,9 +6,10 @@ Created on 16.05.2017
 This should suit as an example for using python ways to create a script for creating a printscheme.
 '''
 from Elements.Shapes import LaserLine
+from Elements.Shapes import LaseredFiducial
 import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
-import GraphicalRepresentations.Canvas
+import GraphicalRepresentations.matplotlibRepresentation
 import Utils
 
 if __name__ == '__main__':
@@ -113,6 +114,14 @@ if __name__ == '__main__':
     ''' Now add the lower cut off p3 line '''
     allLaserLines.append(LaserLine(startCutOff, endCutOff, powerCutOff, freqCutOff, speedCutOff))
     
+    ''' Add a fiducial '''
+    fiducial = LaseredFiducial((-5000, -5000));
+    
+    for line in fiducial.lines:
+        print(line.start, line.end)
+        allLaserLines.append(line);
+
+    
    
     ''' All lines that should be lasered are added now. To make changes just change the parameters. For Example distance between cells'''
     
@@ -122,13 +131,23 @@ if __name__ == '__main__':
     laserScript = ScriptAlgorithms.laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(allLaserLines, nullX, nullY)
     print (laserScript)
     
+    
+    ''' this creates a simple matplotlib representation '''
+    canvas = GraphicalRepresentations.matplotlibRepresentation.matplotCanvas();
+    
+    canvas.lines = allLaserLines;
+    
+    canvas.plot();
+    
+    
+    
     ''' show a very rudimantary graphical represenation ( will be moved to a matplotlib plot... )'''
-    GraphicalRepresentations.Canvas.showLines(allLaserLines)
+    #GraphicalRepresentations.Canvas.showLines(allLaserLines)
     
     ''' save the file if you want '''
     filename = raw_input("If you want to save the file, provide a filename:\n")
     if filename != '':
         Utils.saveScript(laserScript,filename)
     
-    
+
                                                                                                 

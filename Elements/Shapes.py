@@ -7,9 +7,9 @@ Defining all available shapes.
 '''
 
 import operator
-from Utils import LineGroup
+import copy
 
-class Line:
+class Line(object):
     ''' Representing a basic line '''
     def __init__(self, start=(0, 0), end=(0, 0)):
         if isinstance(start, tuple) == False:
@@ -33,6 +33,31 @@ class Line:
         self.end = tuple(map(operator.add, self.end, translationVector));
         return self
     
+
+class LineGroup(object):
+    ''' Wrapper for multiple lines'''
+    def __init__(self, containingLines = []):
+        for line in containingLines:
+            if isinstance(line, Line) == False:
+                raise ValueError('A line group may only consist of lines!');
+        self.lines = containingLines;
+
+    def addLine(self, line):
+        if isinstance(line, Line) == False:
+            raise ValueError('A line group may only consist of lines!');
+        self.lines.append(line);
+    
+    def translate(self, translationVector = (0, 0)):
+        for line in self.lines:
+            line.translate(translationVector);
+            
+    def createCopy(self, translationVector):
+        newGroupLines = []
+        for line in self.lines:
+            newLine = copy.deepcopy(line);
+            newLine.translate(translationVector);
+            newGroupLines.append(newLine);
+        return newGroupLines;
   
 class LaserLine(Line):
     ''' Representing a Laser line. Normal line with power frequency and speed associated.'''
@@ -56,10 +81,11 @@ class LaserLine(Line):
     
 class LaseredFiducial(LineGroup):
     ''' LaseredFiducial with default size. The center point will be the center of the cross '''
-    def __init__(self, center=(0, 0), width = 5, height = 5, power = 45, freq = 20, speed = 25000):
+    def __init__(self, center=(0, 0), width = 5000, height = 5000, power = 45, freq = 20, speed = 25000):
+        super(LaseredFiducial, self).__init__();
         if isinstance(center, tuple) == False:
             raise ValueError('parameter center must be a tuple of x and y position!');
-        if _checkIfIntFloatOrLong(center[0]) == False or _checkIfIntFloatOrLong(center[1]):
+        if _checkIfIntFloatOrLong(center[0]) == False or _checkIfIntFloatOrLong(center[1]) == False:
             raise ValueError('x and y of center must be long or int!')
         xstart = center[0] - width / 2.0;
         xend = center[0] + width / 2.0;
@@ -70,7 +96,7 @@ class LaseredFiducial(LineGroup):
         
         
 
-class Rectangle:
+class Rectangle(object):
     '''Representing a simple rectangle'''
     def __init__(self, x = 0, y = 0, width = 0, height = 0):
         if _checkIfIntFloatOrLong(x) == False:
