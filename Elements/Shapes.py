@@ -63,15 +63,15 @@ class LaserLine(Line):
     ''' Representing a Laser line. Normal line with power frequency and speed associated.'''
     def __init__(self, start=(0, 0), end=(0, 0), power=0, frequency=0, speed=0):
         Line.__init__(self, start, end)
-        if isinstance(power, (int, long)) == False:
+        if isinstance(power, (int, long, float)) == False:
             raise ValueError('power must be a integer!')
-        if isinstance(frequency, (int, long)) == False:
+        if isinstance(frequency, (int, long, float)) == False:
             raise ValueError('frequency must be a integer!')
-        if isinstance(speed, (int, long)) == False:
+        if isinstance(speed, (int, long, float)) == False:
             raise ValueError('speed must be a integer!')
-        self.power = power
-        self.frequency = frequency
-        self.speed = speed
+        self.power = int(power)
+        self.frequency = int(frequency)
+        self.speed = int(speed)
     
     def createCopy(self, translationVector):
         ''' Creates a copy of the the laserline and if provided translates the copy by the translationvector'''

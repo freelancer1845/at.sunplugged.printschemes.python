@@ -12,7 +12,7 @@ class InputForm(object):
     '''
 
 
-    def __init__(self, *fields): 
+    def __init__(self, dictonary): 
         '''
         Constructor
         '''
@@ -23,14 +23,22 @@ class InputForm(object):
         self.swin.pack()'''
         self.swin = self.root;
         
+        self.initialDictonary = dictonary;
+        
+        self.keyEntryDictonary = {};
+        
+        self.savedDictonary = {};
         
         self.rows = 0;
         self.entryFields = [];
         self.fieldValues = [];
         self.defaultValues = [];
         self.isOk = False;
-        for field in fields:
-            self._createInputForm(field);
+        for key in dictonary:
+            entryField = self._createInputForm(key);
+            entryField.insert(0, str(dictonary[key]));
+            self.keyEntryDictonary[key] = entryField;
+            
         
         Button(self.swin, text="Cancel", command=self._cancelCall).grid(row=self.rows, column=1, padx=20, pady=50, columnspan = 1, sticky='WE');
         Button(self.swin, text="Ok", command=self._okCall).grid(row=self.rows, column=2, padx=20, pady=50, columnspan = 1, sticky='WE');
@@ -40,11 +48,8 @@ class InputForm(object):
         mainloop();
         return self.isOk;
     
-    def setDefaultValues(self, values):
-        index = 0;
-        for value in values:
-            self.entryFields[index].insert(0, str(value));
-            index += 1;
+    def getDictonary(self):
+        return self.savedDictonary;
     
     def _createInputForm(self, field):
         Label(self.swin, text=field).grid(row=self.rows, column=1, padx=20, pady=0);
@@ -52,6 +57,7 @@ class InputForm(object):
         entryField.grid(row=self.rows, column=2, padx=20, pady=0);
         self.entryFields.append(entryField);
         self.rows += 1
+        return entryField;
         
     def _okCall(self):
         
@@ -64,5 +70,5 @@ class InputForm(object):
         self.isOk = False;
     
     def _saveFields(self):
-        for entry in self.entryFields:
-            self.fieldValues.append(entry.get());
+        for key in self.keyEntryDictonary:
+            self.savedDictonary[key] = int(self.keyEntryDictonary[key].get());

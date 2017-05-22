@@ -15,85 +15,61 @@ import Utils
 
 if __name__ == '__main__':
     
-    defaultValues = []
-    
-    def createDefaultValue(value):
-        defaultValues.append(value);
-        return value;
-    
     
     ''' This creates n cells and adds a n + 1 incomplete cell plus a cut off line. '''
-    xStart = 0;
-    defaultValues.append(xStart);
-    xEnd = 40000;
-    defaultValues.append(xEnd);
-    ''' Parameters For P1 '''
-    powerP1 = 45
-    freqP1 = 20
-    speedP1 = 25000
-    yStartP1 = 2500
-    
-    ''' Parameters For P2 '''
-    powerP2 = 30
-    freqP2 = 150
-    speedP2 = 50000
-    yStartP2 = 2800
-    distanceBetweenP2Lines = 20
-    
-    ''' Paramters For P3 '''
-    powerP3 = 8
-    freqP3 = 20
-    speedP3 = 50000
-    yStartP3 = 2430
-    distanceBetweenFirstAndSecondP3Line = 2570 - 2430
-    distanceBetweenSecondAndThirdP3Line = 3300 - 2570
-    
-    ''' Paramters For P3 CutOffLine'''
-    startCutOff = (xStart, -2500)
-    endCutOff = (xEnd, -2500)
-    powerCutOff = powerP3
-    freqCutOff = freqP3
-    speedCutOff = speedP3
-    
-    ''' Cell duplication parameters '''
-    distanceBetweenCells = 5000
-    numberOfCells = 5
-    '''
+    ''' We first define a dictonary containing all necessary parameters. These are the default values. A GUI will be opened where the values may be changed.
+        Currently only INTEGER values are supported!
+     '''
+    parameters = {'xStart': 0,
+                  'xEnd': 40000,
+                  'powerP1': 45,
+                  'freqP1': 20,
+                  'speedP1': 25000,
+                  'yStartP1': 2500,
+                  'powerP2': 30,
+                  'freqP2': 150,
+                  'speedP2': 50000,
+                  'yStartP2': 2800,
+                  'distanceBetweenP2Lines': 20,
+                  'powerP3': 8,
+                  'freqP3': 20,
+                  'speedP3': 50000,
+                  'yStartP3': 2430,
+                  'distanceBetweenFirstAndSecondP3Line': 2570 - 2430,
+                  'distanceBetweenSecondAndThirdP3Line': 3300- 2570,
+                  'yCutOff': -2500,
+                  'powerCutOff': 8,
+                  'freqCutOff': 20,
+                  'speedCutOff': 50000,
+                  'distanceBetweenCells': 5000,
+                  'numberOfCells': 5,
+                  'fiducialX': -5000,
+                  'fiducialY': -5000}
+
     #Graphical representation of a value input form. Not finished.
-    inputForm = GraphicalRepresentations.Gui.InputForm('xStart', 'xEnd', 'powerP1', 'freqP1', 'speedP1', 'yStartP1', 'powerP2', 'freqP2', 'speedP2', 'ystartP2', 'distance Betweeen P2 Lines',
-    'powerP3',
-    'freqP3',
-    'speedP3',
-    'yStartP3',
-    'distanceBetweenFirstAndSecondP3Line',
-    'distanceBetweenSecondAndThirdP3Line', 'startCutOff',
-    'endCutOff',
-    'powerCutOff',
-    'freqCutOff',
-    'speedCutOff', 'distanceBetweenCells',
-    'numberOfCells')
-    inputForm.setDefaultValues(defaultValues)
+    inputForm = GraphicalRepresentations.Gui.InputForm(parameters)
     
     if inputForm.open() == True:
-        index = 0;
-        for field in inputForm.fieldValues:
-            if field != '':
-                print('new value')
-                defaultValues[index] = int(field);
-            index += 1;
+        parameters = inputForm.getDictonary();
+        for key in parameters:
+            print(key, parameters[key]);
     else:
         quit()
-    '''
     
-    ''' First create one cell and store all the lines in one array '''
+    
+    ''' First create one cell and store all the lines in one list.'''
     singleCellLines = []
     
-    ''' Create P1 Line '''
-    singleCellLines.append(LaserLine((xStart, yStartP1), (xEnd, yStartP1), powerP1, freqP1, speedP1))
+    ''' Create P1 Line and immediately append it to the singleCellLines... For instance the first parameter is a tuple of xStart and yStart (0, 2500)'''
+    singleCellLines.append(LaserLine((parameters['xStart'], parameters['yStartP1']),
+                                      (parameters['xEnd'], parameters['yStartP1']),
+                                       parameters['powerP1'], parameters['freqP1'], parameters['speedP1']));
     
     ''' Create P2 Lines '''
     for i in range(0, 5):
-        singleCellLines.append(LaserLine((xStart, yStartP2 + i * distanceBetweenP2Lines), (xEnd, yStartP2 + i * distanceBetweenP2Lines), powerP2, freqP2, speedP2))
+        singleCellLines.append(LaserLine((parameters['xStart'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
+                                          (parameters['xEnd'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
+                                           parameters['powerP2'], parameters['freqP2'], parameters['freqP2']));
         
     ''' Alternative
     startLine = LaserLine((xStart, yStartP1), (xEnd, yEnd), powerP2, freqP2, speedP2)
@@ -105,7 +81,9 @@ if __name__ == '__main__':
         
 
     ''' Create P3 Lines '''
-    firstLineP3 = LaserLine((xStart, yStartP3), (xEnd, yStartP3), powerP3, freqP3, speedP3)
+    firstLineP3 = LaserLine((parameters['xStart'], parameters['yStartP3']),
+                             (parameters['xEnd'], parameters['yStartP3']),
+                              parameters['powerP3'], parameters['freqP3'], parameters['speedP3'])
     ''' Alternative
     firstLineP3 = LaserLine()
     firstLineP3.start = (xStart, yStartP3)
@@ -115,8 +93,8 @@ if __name__ == '__main__':
     firstLineP3.speed = speedP3
     '''
     
-    secondLineP3 = firstLineP3.createCopy((0, distanceBetweenFirstAndSecondP3Line))
-    thridLineP3 = secondLineP3.createCopy((0, distanceBetweenSecondAndThirdP3Line))
+    secondLineP3 = firstLineP3.createCopy((0, parameters['distanceBetweenFirstAndSecondP3Line']))
+    thridLineP3 = secondLineP3.createCopy((0, parameters['distanceBetweenSecondAndThirdP3Line']))
     singleCellLines.append(firstLineP3)
     singleCellLines.append(secondLineP3)
     singleCellLines.append(thridLineP3)
@@ -127,10 +105,10 @@ if __name__ == '__main__':
     
     ''' There are better ways, but this not just adds the first cell
         and then all others but creates 5 new cells from the single cell and adds them'''
-    for i in range(0, numberOfCells):
+    for i in range(0, parameters['numberOfCells']):
         ''' this duplicates the single cell with a translation vector provided as parameter.
             The first cell has no translation and thus is just the untranslated single cell (i = 0) '''
-        currentCell = Elements.Utils.duplicateLineArray(singleCellLines, (0, i * distanceBetweenCells))
+        currentCell = Elements.Utils.duplicateLineArray(singleCellLines, (0, i * parameters['distanceBetweenCells']))
         
         ''' now add every line of the new cell to allLaserLines'''
         for line in currentCell:
@@ -138,17 +116,21 @@ if __name__ == '__main__':
 
     ''' Add the n + 1 part cell '''
     ''' Don't forget that there is also a p1 line that belongs to this cell'''
-    allLaserLines.append(LaserLine((xStart, (distanceBetweenCells * numberOfCells) + yStartP1), (xEnd, (distanceBetweenCells * numberOfCells) + yStartP1), powerP1, freqP1, speedP1))
+    allLaserLines.append(LaserLine((parameters['xStart'], (parameters['distanceBetweenCells'] * parameters['numberOfCells']) + parameters['yStartP1']),
+                                    (parameters['xEnd'], (parameters['distanceBetweenCells'] * parameters['numberOfCells']) + parameters['yStartP1']),
+                                     parameters['yStartP1'], parameters['freqP1'], parameters['speedP1']));
     ''' we can reuse the p3 lines '''
-    allLaserLines.append(firstLineP3.createCopy((0, distanceBetweenCells * numberOfCells)))
-    allLaserLines.append(secondLineP3.createCopy((0, distanceBetweenCells * numberOfCells)))
+    allLaserLines.append(firstLineP3.createCopy((0, parameters['distanceBetweenCells'] * parameters['numberOfCells'])))
+    allLaserLines.append(secondLineP3.createCopy((0, parameters['distanceBetweenCells'] * parameters['numberOfCells'])))
                          
     
     ''' Now add the lower cut off p3 line '''
-    allLaserLines.append(LaserLine(startCutOff, endCutOff, powerCutOff, freqCutOff, speedCutOff))
+    allLaserLines.append(LaserLine((parameters['xStart'], parameters['yCutOff']),
+                                   (parameters['xEnd'], parameters['yCutOff']) ,
+                                   parameters['powerCutOff'], parameters['freqCutOff'], parameters['speedCutOff']));
     
     ''' Add a fiducial '''
-    fiducial = LaseredFiducial((-5000, -5000));
+    fiducial = LaseredFiducial((parameters['fiducialX'], parameters['fiducialY']));
     
     for line in fiducial.lines:
         print(line.start, line.end)
@@ -172,10 +154,7 @@ if __name__ == '__main__':
     
     canvas.plot();
     
-    
-    
-    ''' show a very rudimantary graphical represenation ( will be moved to a matplotlib plot... )'''
-    #GraphicalRepresentations.Canvas.showLines(allLaserLines)
+
     
     ''' save the file if you want '''
     filename = raw_input("If you want to save the file, provide a filename:\n")
