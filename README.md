@@ -7,7 +7,11 @@
 
 The project may be seen as a framework providing different functions and classes to create python scripts that in turn create scripts to operate machines.
 
-**The used unit is micrometer if not explicitly specified.**
+See scriptExample.py!
+
+**Feel free to open issues if there are any questions or new features are required.**
+
+**The used unit for lengths is micrometer if not explicitly specified.**
 
 
 ### Elements.Shapes
