@@ -6,7 +6,7 @@ Created on 16.05.2017
 This should suit as an example for using python ways to create a script for creating a printscheme.
 '''
 from Elements.Shapes import LaserLine
-from Elements.Shapes import LaseredFiducial
+from Elements.CompositeShapes import LaseredFiducial
 import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
 import GraphicalRepresentations.matplotlibRepresentation

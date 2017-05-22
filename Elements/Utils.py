@@ -1,13 +1,44 @@
 '''
 Created on 16.05.2017
 
-This module contains some Utility classes and functions that can be used to save time.
+This module contains all Classes and Functions that are useful when using Shapes.
+
+LineGroup is useful composite shapes that consist out of lines.
+ But also if you want to combine multiple Lines in a group and want to translate/duplicate them etc.
+
+The duplicateLineArray method may be used to duplicate an list of lines and translate them (replaced by LineGroup...)
 
 @author: Jascha Riedel
 '''
 import Shapes
 import copy
 
+
+class LineGroup(object):
+    ''' Wrapper for multiple lines'''
+    def __init__(self, containingLines=[]):
+        for line in containingLines:
+            if isinstance(line, Shapes.Line) == False:
+                raise ValueError('A line group may only consist of lines!');
+        self.lines = containingLines;
+
+    def addLine(self, line):
+        if isinstance(line, Shapes.Line) == False:
+            raise ValueError('A line group may only consist of lines!');
+        self.lines.append(line);
+    
+    def translate(self, translationVector=(0, 0)):
+        for line in self.lines:
+            line.translate(translationVector);
+            
+    def createCopy(self, translationVector):
+        newGroupLines = []
+        for line in self.lines:
+            newLine = copy.deepcopy(line);
+            newLine.translate(translationVector);
+            newGroupLines.append(newLine);
+        return newGroupLines;
+  
 
 def duplicateLineArray(lines, translationVector=(0, 0)):
     if isinstance(lines, list) == False:

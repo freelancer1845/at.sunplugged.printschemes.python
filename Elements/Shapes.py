@@ -1,13 +1,16 @@
 '''
 Created on 16.05.2017
-Defining all available shapes.
+Defining all available shapes as classes.
+
+The classes Line and Rectangle are the current base classes. Every Shape should be a descendant of those classes.
+One might argue that the Fiducial is also a shape, but it consists out of LaserLines and thus is not a descendant of Line
+but a collection of line (i. e. a group of shapes). 
 
 
 @author: Jascha Riedel
 '''
 
 import operator
-import copy
 
 class Line(object):
     ''' Representing a basic line '''
@@ -34,31 +37,7 @@ class Line(object):
         return self
     
 
-class LineGroup(object):
-    ''' Wrapper for multiple lines'''
-    def __init__(self, containingLines = []):
-        for line in containingLines:
-            if isinstance(line, Line) == False:
-                raise ValueError('A line group may only consist of lines!');
-        self.lines = containingLines;
 
-    def addLine(self, line):
-        if isinstance(line, Line) == False:
-            raise ValueError('A line group may only consist of lines!');
-        self.lines.append(line);
-    
-    def translate(self, translationVector = (0, 0)):
-        for line in self.lines:
-            line.translate(translationVector);
-            
-    def createCopy(self, translationVector):
-        newGroupLines = []
-        for line in self.lines:
-            newLine = copy.deepcopy(line);
-            newLine.translate(translationVector);
-            newGroupLines.append(newLine);
-        return newGroupLines;
-  
 class LaserLine(Line):
     ''' Representing a Laser line. Normal line with power frequency and speed associated.'''
     def __init__(self, start=(0, 0), end=(0, 0), power=0, frequency=0, speed=0):
@@ -79,22 +58,6 @@ class LaserLine(Line):
         
         return newLine
     
-class LaseredFiducial(LineGroup):
-    ''' LaseredFiducial with default size. The center point will be the center of the cross '''
-    def __init__(self, center=(0, 0), width = 5000, height = 5000, power = 45, freq = 20, speed = 25000):
-        super(LaseredFiducial, self).__init__();
-        if isinstance(center, tuple) == False:
-            raise ValueError('parameter center must be a tuple of x and y position!');
-        if _checkIfIntFloatOrLong(center[0]) == False or _checkIfIntFloatOrLong(center[1]) == False:
-            raise ValueError('x and y of center must be long or int!')
-        xstart = center[0] - width / 2.0;
-        xend = center[0] + width / 2.0;
-        ystart = center[0] - height / 2.0;
-        yend = center[0] + height / 2.0;
-        self.addLine(LaserLine((xstart, center[1]), (xend, center[1]), power, freq, speed));
-        self.addLine(LaserLine((center[0], ystart), (center[0] , yend), power, freq, speed));
-        
-        
 
 class Rectangle(object):
     '''Representing a simple rectangle'''
