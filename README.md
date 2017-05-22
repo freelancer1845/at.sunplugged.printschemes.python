@@ -7,7 +7,7 @@
 
 The project may be seen as a framework providing different functions and classes to create python scripts that in turn create scripts to operate machines.
 
-** The used unit is micrometer if not explicitly specified. **
+**The used unit is micrometer if not explicitly specified.**
 
 
 ### Elements.Shapes
