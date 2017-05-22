@@ -130,7 +130,7 @@ if __name__ == '__main__':
                                    parameters['powerCutOff'], parameters['freqCutOff'], parameters['speedCutOff']));
     
     ''' Add a fiducial '''
-    fiducial = LaseredFiducial((parameters['fiducialX'], parameters['fiducialY']));
+    fiducial = LaseredFiducial((parameters['fiducialX'], parameters['fiducialY']), width = 5000, height = 5000);
     
     for line in fiducial.lines:
         print(line.start, line.end)
@@ -157,7 +157,7 @@ if __name__ == '__main__':
 
     
     ''' save the file if you want '''
-    filename = raw_input("If you want to save the file, provide a filename:\n")
+    filename = raw_input("If you want to save the script, provide a filename:\n")
     if filename != '':
         Utils.saveScript(laserScript,filename)
     
