@@ -4,7 +4,6 @@ Created on 21.05.2017
 @author: jasch
 '''
 from Tkinter import *
-from tkinter.tix import *
 
 class InputForm(object):
     '''

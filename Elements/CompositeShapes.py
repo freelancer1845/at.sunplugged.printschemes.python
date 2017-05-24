@@ -10,7 +10,6 @@ For now thats only the LaseredFiducial. A group of LaserLines.
 
 @author: Jascha Riedel
 '''
-from Utils import _checkIfIntFloatOrLong;
 import Utils
 import Shapes
 
@@ -21,7 +20,7 @@ class LaseredFiducial(Utils.LineGroup):
         super(LaseredFiducial, self).__init__();
         if isinstance(center, tuple) == False:
             raise ValueError('parameter center must be a tuple of x and y position!');
-        if _checkIfIntFloatOrLong(center[0]) == False or _checkIfIntFloatOrLong(center[1]) == False:
+        if Utils._checkIfIntFloatOrLong(center[0]) == False or Utils._checkIfIntFloatOrLong(center[1]) == False:
             raise ValueError('x and y of center must be long or int!')
         xstart = center[0] - width / 2.0;
         xend = center[0] + width / 2.0;

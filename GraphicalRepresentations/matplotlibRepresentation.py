@@ -4,7 +4,9 @@ Created on 21.05.2017
 @author: jasch
 '''
 import matplotlib.pyplot as matPlot
+import matplotlib.patches as mpatches
 import Elements
+
 
 
 class matplotCanvas():
@@ -13,6 +15,11 @@ class matplotCanvas():
         self.rectangles = rectangles;
         self.nullX = 0;
         self.nullY = 0;
+        self.maxpower = 0;
+        self.maxfreq= 0;
+        self.maxspeed = 0;
+        self.laserLineColors = [];
+        self.patches = [];
     
     @property
     def lines(self):
@@ -55,32 +62,48 @@ class matplotCanvas():
         matPlot.show();
         
     def _createPlot(self):
+        self._destoyPlot();
+        
+        for line in self.lines:
+            if isinstance(line, Elements.Shapes.LaserLine) == True:
+                self._processLaserLine(line);
+        
+        matPlot.legend(handles=self.patches, loc=1);
+        
+        
+    def _destoyPlot(self):
         matPlot.close();
-        maxpower = 0
-        maxfreq = 0
-        maxspeed = 0
-        for line in self.lines:
-            if maxpower < line.power:
-                maxpower = line.power;
-            if maxfreq < line.frequency:
-                maxfreq = line.frequency;
-            if maxspeed < line.speed:
-                maxspeed = line.speed;
-        print(maxpower, maxfreq, maxspeed)
-        
-        for line in self.lines:
-            red = "%0.2X" % (line.power / float(maxpower) * 255)
-            green = "%0.2X" % (line.frequency / float(maxfreq) * 255)
-            blue = "%0.2X" % (line.speed / float(maxspeed) * 255)
-        
-            matPlot.plot([line.start[0], line.end[0]], [line.start[1], line.end[1]], color="#" + red + green + blue);
-        
+        self.maxfreq = 0;
+        self.maxpower = 0;
+        self.maxspeed = 0;
+        self.laserLineColors = [];
         
     def savePlot(self, filename):
         self._createPlot();
         matPlot.axis('off')
         matPlot.savefig(filename, dpi=2540)
         
+    
+    
+    def _processLaserLine(self, line):
+    
+        for line in self.lines:
+            if self.maxpower < line.power:
+                self.maxpower = line.power;
+            if self.maxfreq < line.frequency:
+                self.maxfreq = line.frequency;
+            if self.maxspeed < line.speed:
+                self.maxspeed = line.speed;
         
+        for line in self.lines:
+            red = "%0.2X" % (line.power / float(self.maxpower) * 255)
+            green = "%0.2X" % (line.frequency / float(self.maxfreq) * 255)
+            blue = "%0.2X" % (line.speed / float(self.maxspeed) * 255)
+            if red + green + blue not in self.laserLineColors:
+                self.laserLineColors.append(red + green + blue)
+                self.patches.append(mpatches.Patch(color='#' + red + green+ blue, label='Laser ' + str(line.power)))
+            
+            matPlot.plot([line.start[0], line.end[0]], [line.start[1], line.end[1]], color="#" + red + green + blue);
+
     
 
