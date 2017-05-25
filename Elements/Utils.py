@@ -43,8 +43,15 @@ class Group(object):
                 element.translate(translationVector);
     
     def addElement(self, element):
+        
         self.elements.append(element);
-    
+        
+    def addElements(self, elements):
+        if isinstance(elements, (tuple, list)):
+            for subElement in elements:
+                self.elements.append(subElement);
+        else:
+            raise ValueError('Only types list and tuple are allowed.')
     def createCopy(self, translationVector = (0, 0)):
         newGroup = copy.deepcopy(self);
         newGroup.translate(translationVector);

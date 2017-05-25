@@ -10,10 +10,16 @@ import Elements
 
 
 class matplotCanvas(Elements.Utils.Group):
+    '''
+        The matplotCanvas is a descendant of Elements.Utils.Group since it consists out of Elements.
+    '''
     def __init__(self, elements = None):
         super(matplotCanvas, self).__init__(elements);
+        
         self.nullX = 0;
         self.nullY = 0;
+        
+        ''' Variables for finding colors of laserLines '''
         self.maxpower = 0;
         self.maxfreq= 0;
         self.maxspeed = 0;
