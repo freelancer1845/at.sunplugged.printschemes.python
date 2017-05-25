@@ -50,7 +50,7 @@ class matplotCanvas():
         self.lines.remove(line);
         
     def addLineGroup(self, group):
-        if isinstance(group, Elements.Shapes.LineGroup) == False:
+        if isinstance(group, Elements.Utils.LineGroup) == False:
             raise ValueError('Group must be of type Elements.Utils.LineGroup');
         for line in group.lines:
             self.addLine(line);
