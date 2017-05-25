@@ -118,7 +118,7 @@ if __name__ == '__main__':
     ''' Don't forget that there is also a p1 line that belongs to this cell'''
     allLaserLines.append(LaserLine((parameters['xStart'], (parameters['distanceBetweenCells'] * parameters['numberOfCells']) + parameters['yStartP1']),
                                     (parameters['xEnd'], (parameters['distanceBetweenCells'] * parameters['numberOfCells']) + parameters['yStartP1']),
-                                     parameters['yStartP1'], parameters['freqP1'], parameters['speedP1']));
+                                     parameters['powerP1'], parameters['freqP1'], parameters['speedP1']));
     ''' we can reuse the p3 lines '''
     allLaserLines.append(firstLineP3.createCopy((0, parameters['distanceBetweenCells'] * parameters['numberOfCells'])))
     allLaserLines.append(secondLineP3.createCopy((0, parameters['distanceBetweenCells'] * parameters['numberOfCells'])))
@@ -157,9 +157,9 @@ if __name__ == '__main__':
 
     
     ''' save the file if you want '''
-    filename = raw_input("If you want to save the script, provide a filename:\n")
-    if filename != '':
-        Utils.saveScript(laserScript,filename)
-    
-
-                                                                                                
+#     filename = raw_input("If you want to save the script, provide a filename:\n")
+#     if filename != '':
+#         Utils.saveScript(laserScript,filename)
+#     
+# 
+#                                                                                                 
