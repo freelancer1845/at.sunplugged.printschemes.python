@@ -75,6 +75,14 @@ class Rectangle(object):
         self.y = y;
         self.width = width;
         self.height = height;
-    
+        
+    def translate(self, translationVector=(0, 0)):
+        if isinstance(translationVector, tuple) == False:
+            raise ValueError('translationVetor must be a tuple')
+        if _checkIfIntFloatOrLong(translationVector[0]) == False or _checkIfIntFloatOrLong(translationVector[1]) == False:
+            raise ValueError('translationVector must be a tuple of numbers!')
+        self.x += translationVector[0];
+        self.y += translationVector[1];
+        
 def _checkIfIntFloatOrLong( x ):
     return isinstance(x, (float, long, int))

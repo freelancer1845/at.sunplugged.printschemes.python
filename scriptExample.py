@@ -11,7 +11,6 @@ import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
 import GraphicalRepresentations.matplotlibRepresentation
 import GraphicalRepresentations.Gui
-import Utils
 
 if __name__ == '__main__':
     
@@ -69,7 +68,7 @@ if __name__ == '__main__':
     for i in range(0, 5):
         singleCellLines.append(LaserLine((parameters['xStart'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
                                           (parameters['xEnd'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
-                                           parameters['powerP2'], parameters['freqP2'], parameters['freqP2']));
+                                           parameters['powerP2'], parameters['freqP2'], parameters['speedP2']));
         
     ''' Alternative
     startLine = LaserLine((xStart, yStartP1), (xEnd, yEnd), powerP2, freqP2, speedP2)
@@ -132,9 +131,9 @@ if __name__ == '__main__':
     ''' Add a fiducial '''
     fiducial = LaseredFiducial((parameters['fiducialX'], parameters['fiducialY']), width = 5000, height = 5000);
     
-    for line in fiducial.lines:
-        print(line.start, line.end)
-        allLaserLines.append(line);
+    mainGroup = Elements.Utils.Group();
+    mainGroup.addElement(Elements.Utils.Group(allLaserLines));
+    mainGroup.addElement(fiducial);
 
     
    
@@ -143,14 +142,13 @@ if __name__ == '__main__':
     ''' This uses the ScriptAlgorithm to create the laserlinesscript '''
     nullX = 15000
     nullY = -15000
-    laserScript = ScriptAlgorithms.laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(allLaserLines, nullX, nullY)
+    laserScript = ScriptAlgorithms.laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(mainGroup.getAllElementsOfType(LaserLine), nullX, nullY)
     print (laserScript)
     
     
     ''' this creates a simple matplotlib representation '''
-    canvas = GraphicalRepresentations.matplotlibRepresentation.matplotCanvas();
+    canvas = GraphicalRepresentations.matplotlibRepresentation.matplotCanvas([mainGroup]);
     
-    canvas.lines = allLaserLines;
     
     canvas.plot();
     

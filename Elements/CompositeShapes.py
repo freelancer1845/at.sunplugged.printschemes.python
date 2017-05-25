@@ -3,7 +3,7 @@ Created on 22.05.2017
 
 
 Here all composite Shapes are found.
-These should be descendants of their respective groups (for now only LineGroup).
+These should be descendants of Group since they are actually groups of elements.
 
 For now thats only the LaseredFiducial. A group of LaserLines.
 
@@ -14,7 +14,7 @@ import Utils
 import Shapes
 
 
-class LaseredFiducial(Utils.LineGroup):
+class LaseredFiducial(Utils.Group):
     ''' LaseredFiducial with default size. The center point will be the center of the cross '''
     def __init__(self, center=(0, 0), width = 5000, height = 5000, power = 45, freq = 20, speed = 25000):
         super(LaseredFiducial, self).__init__();
@@ -26,6 +26,6 @@ class LaseredFiducial(Utils.LineGroup):
         xend = center[0] + width / 2.0;
         ystart = center[0] - height / 2.0;
         yend = center[0] + height / 2.0;
-        self.addLine(Shapes.LaserLine((xstart, center[1]), (xend, center[1]), power, freq, speed));
-        self.addLine(Shapes.LaserLine((center[0], ystart), (center[0] , yend), power, freq, speed));
+        self.addElement(Shapes.LaserLine((xstart, center[1]), (xend, center[1]), power, freq, speed));
+        self.addElement(Shapes.LaserLine((center[0], ystart), (center[0] , yend), power, freq, speed));
         
