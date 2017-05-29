@@ -84,5 +84,17 @@ class Rectangle(object):
         self.x += translationVector[0];
         self.y += translationVector[1];
         
+        
+class PrintRectangle(Rectangle):
+    ''' Representing a rectangle that will be printed later.
+        Use metaData to specify 'color' and 'alpha' in the plot. {'color': 'black'; 'alpha': 0.3} ...
+    '''
+    def __init__(self, x = 0, y = 0, width = 0, height = 0, metaData = None):
+        Rectangle.__init__(self, x, y, width, height);
+        if metaData is None:
+            self.metaData = {};
+        else:
+            self.metaData = metaData;
+        
 def _checkIfIntFloatOrLong( x ):
     return isinstance(x, (float, long, int))

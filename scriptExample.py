@@ -145,7 +145,11 @@ if __name__ == '__main__':
     laserScript = ScriptAlgorithms.laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(mainGroup.getAllElementsOfType(LaserLine), nullX, nullY)
     print (laserScript)
     
+    printedRectangles = Elements.Utils.Group();
+    printedRectangles.addElement(Elements.Shapes.PrintRectangle(2500, 0, 35000, 25000, {'color': 'red', 'alpha': 0.3}));
+    printedRectangles.addElement(Elements.Shapes.PrintRectangle(1000, 1000, 38000, 23000, {'color': 'grey', 'alpha': 0.3}));
     
+    mainGroup.addElement(printedRectangles);
     ''' this creates a simple matplotlib representation '''
     canvas = GraphicalRepresentations.matplotlibRepresentation.matplotCanvas([mainGroup]);
     

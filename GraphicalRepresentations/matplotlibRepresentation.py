@@ -33,13 +33,13 @@ class matplotCanvas(Elements.Utils.Group):
 
 
     
+ 
+    
     def _createPlot(self):
         self._destoyPlot();
-        
         self._processLaserLines();
+        self._processPrintedRectangles();
         
-        for line in self.getAllElementsOfType(Elements.Shapes.LaserLine):
-                self._processLaserLine(line);
         
         matPlot.legend(handles=self.patches, loc=1);
         
@@ -83,5 +83,30 @@ class matplotCanvas(Elements.Utils.Group):
         
         matPlot.plot([line.start[0], line.end[0]], [line.start[1], line.end[1]], color="#" + red + green + blue);
 
+
+    def _processPrintedRectangles(self):
+        rectangles = self.getAllElementsOfType(Elements.Shapes.PrintRectangle);
+        for rect in rectangles:
+            metaData = rect.metaData;
+            if 'color' in metaData:
+                color = metaData['color'];
+            else:
+                color = 'gray';
+            if 'alpha' in metaData:
+                alpha = float(metaData['alpha']);
+            else:
+                alpha = 0.5;
+                
+            matPlot.gca().add_patch(mpatches.Rectangle(
+                                            (rect.x, rect.y),
+                                            rect.width,
+                                            rect.height,
+                                            alpha=alpha,
+                                            color=color));
+            
+            
+            
+        pass
+    
     
 
