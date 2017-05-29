@@ -51,7 +51,7 @@ def groupLaserLinesByPower(sortedLaserLines):
 
 def createPowerHeader(group):
     laserLine = group[0]
-    return '*-----Setting new power-----Power:' + str(laserLine.power) + '---Frequency:' + str(laserLine.frequency) + '-----\n6;LPAR;' + str(laserLine.power) + ';' + str(laserLine.frequency) + '\n'
+    return '*-----Setting new power-----Power:' + str(laserLine.power) + '---Frequency:' + str(laserLine.frequency) + '-----*\n6;LPAR;' + str(laserLine.power) + ';' + str(laserLine.frequency) + '\n'
 
 
 def createLaseringScript(group):
@@ -75,8 +75,8 @@ def _getYStartFromLaserLine(laserLine):
 
 def createFinish():
     script = []
-    script.append('*----- Finish -----\n')
-    script.append('*---Coming Home---\n')
+    script.append('*----- Finish -----*\n')
+    script.append('*---Coming Home---*\n')
     script.append('0;PAY;100000;100000\n')
     script.append('0;ERR\n')
     return ''.join(script)
