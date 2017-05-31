@@ -11,6 +11,7 @@ import Elements.Utils
 import ScriptAlgorithms.laserLineAlgorithm
 import GraphicalRepresentations.matplotlibRepresentation
 import GraphicalRepresentations.Gui
+import Utils
 
 if __name__ == '__main__':
     
@@ -43,7 +44,8 @@ if __name__ == '__main__':
                   'distanceBetweenCells': 5000,
                   'numberOfCells': 5,
                   'fiducialX': -5000,
-                  'fiducialY': -5000}
+                  'fiducialY': -5000
+                  }
 
     #Graphical representation of a value input form. Not finished.
     inputForm = GraphicalRepresentations.Gui.InputForm(parameters)
@@ -155,13 +157,13 @@ if __name__ == '__main__':
     
     
     canvas.plot();
-    
+    canvas.savePlot("test.pdf")
 
     
     ''' save the file if you want '''
-#     filename = raw_input("If you want to save the script, provide a filename:\n")
-#     if filename != '':
-#         Utils.saveScript(laserScript,filename)
+    filename = raw_input("If you want to save the script, provide a filename:\n")
+    if filename != '':
+        Utils.saveScript(laserScript,filename)
 #     
 # 
 #                                                                                                 

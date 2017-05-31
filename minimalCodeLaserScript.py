@@ -12,6 +12,8 @@ from Elements.Shapes import LaserLine
 from ScriptAlgorithms import laserLineAlgorithm
 from GraphicalRepresentations import matplotlibRepresentation
 from GraphicalRepresentations.Gui import InputForm
+import Utils
+
 
 if __name__ == '__main__':
     ''' First we define all the parameters and get them via a simple Tkinter interface '''
@@ -124,9 +126,9 @@ if __name__ == '__main__':
     
     
     ''' save the file if you want '''
-#     filename = raw_input("If you want to save the script, provide a filename:\n")
-#     if filename != '':
-#         Utils.saveScript(laserScript,filename)
+    filename = raw_input("If you want to save the script, provide a filename:\n")
+    if filename != '':
+        Utils.saveScript(laserScript,filename)
     
     
     

@@ -62,11 +62,11 @@ def createLaseringScript(group):
         distanceXStart = abs(line.start[0] - previousX)
         distanceXEnd = abs(line.end[0] - previousX)
         if (distanceXEnd < distanceXStart):
-            script.append('0;LASERNXY;{};{};{};{};{}\n'.format(str(line.end[0]), str(line.start[1]), str(line.start[0]), str(line.end[1]), str(line.speed)))
-            previousX = line.start[0]
+            script.append('0;LASERNXY;{};{};{};{};{}\n'.format(str(int(line.end[0])), str(int(line.start[1])), str(int(line.start[0])), str(int(line.end[1])), str(int(line.speed))))
+            previousX = int(line.start[0])
         else:
-            script.append('0;LASERNXY;{};{};{};{};{}\n'.format(str(line.start[0]), str(line.start[1]), str(line.end[0]), str(line.end[1]), str(line.speed)))
-            previousX = line.end[0]
+            script.append('0;LASERNXY;{};{};{};{};{}\n'.format(str(int(line.start[0])), str(int(line.start[1])), str(int(line.end[0])), str(int(line.end[1])), str(int(line.speed))))
+            previousX = int(line.end[0])
     
     return ''.join(script)
 
