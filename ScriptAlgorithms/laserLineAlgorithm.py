@@ -9,7 +9,7 @@ from operator import attrgetter
 
 
 def intialCommands():
-    return '6;LACT\n3;ALIGN;1500;-0.215\n'
+    return '6;LACT\n3;ALLIGN;1500;-0.215\n0;NULL;16000;117000\n'
 
     
 def startingPointExplicit(nullX, nullY):
