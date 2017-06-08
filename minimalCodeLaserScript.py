@@ -41,7 +41,8 @@ if __name__ == '__main__':
                   'distanceBetweenCells': 5000,
                   'numberOfCells': 5,
                   'fiducialX':-5000,
-                  'fiducialY':-5000}
+                  'fiducialY':-5000,
+                  'NumberofP2Lines':5}
     
     inputForm = InputForm(parameters)
     
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     
     ''' Add p2 Lines '''                                    
     p2Lines = Group();
-    for i in range(0, 5):
+    for i in range(0, parameters['NumberofP2Lines']):
         p2Lines.addElement(LaserLine((parameters['xStart'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
                                     (parameters['xEnd'], parameters['yStartP2'] + i * parameters['distanceBetweenP2Lines']),
                                     parameters['powerP2'],
