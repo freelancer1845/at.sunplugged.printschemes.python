@@ -5,6 +5,7 @@ Created on 29.04.2017
 '''
 
 import Elements.Shapes
+from Elements.Utils import Group
 from operator import attrgetter
 
 
@@ -121,5 +122,28 @@ def createScriptFromLaserLinesWithExplicitNullPoint(laserLines, nullX, nullY):
     
     return "".join(script)
 
+def readBackScriptFile(fileName):
+    
+    try:
+        with open(fileName, 'r') as fileHandle:
+            
+            laserLines = Group();
+            currentPower = 0
+            currentFreq = 0
+            
+            for line in fileHandle:
+                if line.startswith('6;LPAR') is True:
+                    splitted = line.split(';')
+                    currentPower = int(splitted[2])
+                    currentFreq = int(splitted[3])
+                elif line.startswith('0;LASERNXY;') is True:
+                    splitted = line.split(';')
+                    laserLines.addElement(Elements.Shapes.LaserLine((int(splitted[2]), int(splitted[3])), (int(splitted[4]), int(splitted[5])), currentPower, currentFreq, int(splitted[6])))
+            
+            return laserLines
+                
+    except IOError:
+        print('Error while reading script', IOError)
+    
     
     
