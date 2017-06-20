@@ -34,6 +34,7 @@ if __name__ == '__main__':
                   'yStartP3': 2430,
                   'distanceBetweenFirstAndSecondP3Line': 2570 - 2430,
                   'distanceBetweenSecondAndThirdP3Line': 3300 - 2570,
+                  'distanceBetweenSecondAndFourthP3Line': 3200 - 2570,
                   'yCutOff':-2500,
                   'powerCutOff': 8,
                   'freqCutOff': 20,
@@ -88,7 +89,8 @@ if __name__ == '__main__':
                               parameters['powerP3'], parameters['freqP3'], parameters['speedP3'])
     secondLineP3 = firstLineP3.createCopy((0, parameters['distanceBetweenFirstAndSecondP3Line']))
     thridLineP3 = secondLineP3.createCopy((0, parameters['distanceBetweenSecondAndThirdP3Line']))
-    singleCellGroup.addElements([firstLineP3, secondLineP3, thridLineP3]);
+    fourthLineP3 = secondLineP3.createCopy((0, parameters['distanceBetweenSecondAndFourthP3Line']))
+    singleCellGroup.addElements([firstLineP3, secondLineP3, thridLineP3,fourthLineP3]);
     
     ''' add the n cells '''
     for i in range(0, parameters['numberOfCells']):
