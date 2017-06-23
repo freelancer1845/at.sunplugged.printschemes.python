@@ -51,6 +51,3 @@ The module contains a single class **InputForm**. On creation you provide as par
 The Gui will contain an inputfield for every entry in the dictionary. With the function *open()* the gui is openend and when closed the function will return either **True(ok clicked)** or **False(cancel clicked or Red X)**.
 You can now get your dictonary back by calling *getDictonary()*.
 
-## Update(20.6.2017)
-
-Added an extra P3 line @minimalCodeLaserScript to test if this line would reduce trickling of printed Silver. 
