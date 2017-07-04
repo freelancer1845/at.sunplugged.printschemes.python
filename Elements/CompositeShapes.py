@@ -24,8 +24,8 @@ class LaseredFiducial(Utils.Group):
             raise ValueError('x and y of center must be long or int!')
         xstart = center[0] - width / 2.0;
         xend = center[0] + width / 2.0;
-        ystart = center[0] - height / 2.0;
-        yend = center[0] + height / 2.0;
+        ystart = center[1] - height / 2.0;
+        yend = center[1] + height / 2.0;
         self.addElement(Shapes.LaserLine((xstart, center[1]), (xend, center[1]), power, freq, speed));
         self.addElement(Shapes.LaserLine((center[0], ystart), (center[0] , yend), power, freq, speed));
         

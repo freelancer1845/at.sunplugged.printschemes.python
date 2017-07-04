@@ -43,17 +43,28 @@ if __name__ == '__main__':
                   'fiducialX':-5000,
                   'fiducialY':-5000}
     
+    parametersMinimal = {'DistanceBetweenCells': 5000,
+                  'P3-P1(-P3)': 70,
+                  'P1-P2': 300,
+                  'P1-UpperP3': 800}
     
-    
-    inputForm = InputForm(parameters)
+    inputForm = InputForm(parametersMinimal)
     
     if inputForm.open() == True:
-        parameters = inputForm.getDictonary();
-        for key in parameters:
-            print(key, parameters[key]);
+        parametersMinimal = inputForm.getDictonary();
+        for key in parametersMinimal:
+            print(key, parametersMinimal[key]);
     else:
         quit()
     
+    parameters['yStartP1'] = 0
+    parameters['yStartP2'] = parametersMinimal['P1-P2']
+    parameters['yStartP3'] = -parametersMinimal['P3-P1(-P3)']
+    parameters['distanceBetweenFirstAndSecondP3Line'] = parametersMinimal['P3-P1(-P3)'] * 2
+    parameters['distanceBetweenSecondAndThirdP3Line'] = parametersMinimal['P1-UpperP3'] - parametersMinimal['P3-P1(-P3)']
+    parameters['yCutOff'] = -parametersMinimal['DistanceBetweenCells']
+    parameters['distanceBetweenCells'] = parametersMinimal['DistanceBetweenCells']
+    parameters['fiducialY'] = parameters['yCutOff'] - 5000
     
     ''' Everything is organized in this MainGroup '''
     
@@ -115,7 +126,7 @@ if __name__ == '__main__':
     
     ''' This uses the ScriptAlgorithm to create the laserlinesscript '''
     nullX = 15000
-    nullY = -15000
+    nullY = -12500
     laserScript = laserLineAlgorithm.createScriptFromLaserLinesWithExplicitNullPoint(mainGroup.getAllElementsOfType(LaserLine), nullX, nullY)
     print (laserScript)
     
