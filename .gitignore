@@ -103,3 +103,4 @@ ENV/
 .project
 .pydevproject
 /test.py
+/text.txt

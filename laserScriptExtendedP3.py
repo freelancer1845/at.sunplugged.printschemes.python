@@ -44,8 +44,6 @@ if __name__ == '__main__':
                   'fiducialY':-5000,
                   'NumberofP2Lines':5}
     
-    
-    
     inputForm = InputForm(parameters)
     
     if inputForm.open() == True:
