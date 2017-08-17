@@ -130,7 +130,7 @@ def readBackScriptFile(fileName):
             laserLines = Group();
             currentPower = 0
             currentFreq = 0
-            
+            currentNullPoint = (0,0)
             for line in fileHandle:
                 if line.startswith('6;LPAR') is True:
                     splitted = line.split(';')
@@ -138,8 +138,10 @@ def readBackScriptFile(fileName):
                     currentFreq = int(splitted[3])
                 elif line.startswith('0;LASERNXY;') is True:
                     splitted = line.split(';')
-                    laserLines.addElement(Elements.Shapes.LaserLine((int(splitted[2]), int(splitted[3])), (int(splitted[4]), int(splitted[5])), currentPower, currentFreq, int(splitted[6])))
-            
+                    laserLines.addElement(Elements.Shapes.LaserLine((int(splitted[2]) + currentNullPoint[0], int(splitted[3]) + currentNullPoint[1]), (int(splitted[4])  + currentNullPoint[0], int(splitted[5]) + currentNullPoint[1]), currentPower, currentFreq, int(splitted[6])))
+                elif line.startswith('0;NULL;') is True:
+                    splitted = line.split(';')
+                    currentNullPoint = (currentNullPoint[0] +  int(splitted[2]),currentNullPoint[1] + int(splitted[3]))
             return laserLines
                 
     except IOError:
